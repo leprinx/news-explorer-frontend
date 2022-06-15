@@ -1,0 +1,12 @@
+.main-function__container{
+    background-image: url('../../images/main-function__container/georgia-de-lotz--UsJoNxLaNo-unsplash.svg');
+    background-origin: padding-box;
+    background-size: cover;
+    color: white;
+}
+
+.main-function__container_saved-news{
+    color: black;
+    background-color: white;
+    background-image: none;
+}

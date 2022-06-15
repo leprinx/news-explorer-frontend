@@ -1,0 +1,140 @@
+.header__container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: 'Roboto', Sans-Serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.33;
+    max-width: 1232px;
+    padding: 0 calc((100% - 1232px) / 2);
+}
+
+@media (max-width: 1300px) {
+    .header__container{
+        padding: 0;
+        margin: 0 40px;
+        max-width: calc(100% - 80px);
+    }
+}
+
+@media (max-width: 1000px) {
+    .header__container{
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 719px) {
+    .header__container{
+        margin: 0 16px;
+        max-width: calc(100% - 36px);
+    }
+}
+
+.header__title{
+    font-family: "Roboto Slab", serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    padding: 30px 0 26px 0;
+    margin: 0;
+    font-weight: 700;
+}
+.header__menu{
+    display: none;
+}
+
+@media (max-width: 719px) {
+    .header__menu{
+        display: block;
+    }
+}
+.header__navbar{
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 719px) {
+    .header__navbar{
+        display: none;
+    }
+}
+.header__redirect-home{
+    margin: auto 42px 0;
+    align-self: center;
+    padding: 30px 0 22px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.header__redirect-home_black{
+    color: black;
+    border-bottom: none;
+}
+.header__redirect-home_active{
+    border-bottom: 3px solid white;
+    padding-bottom: 19px;
+}
+.header__redirect-saved{
+    margin: auto 42px 0 0;
+    align-self: center;
+    padding: 30px 0 22px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+.header__redirect-saved_active{
+    border-bottom: 3px solid black;
+    box-sizing: border-box;
+    padding-bottom: 19px;
+    color: black;
+}
+.header__log{
+    margin: auto;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    padding: 19px 0 13px;
+    width: 152px;
+    line-height: 24px;
+    cursor: poInter;
+    font-weight: 500;
+}
+.header__log_saved-route{
+    border: 1px solid #1A1B22;
+}
+
+.header__log-out{
+    display: flex;
+    justify-content: center;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    min-width: 112px;
+    padding: 12px 19px 12px 19px;
+    margin-top: 8px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.header__log-out_saved{
+    border: 1px solid black;
+}
+
+.header__user{
+    margin: auto 8px;
+    align-self: flex-end;
+}
+.header__user_saved{
+    color: black;
+}
+
+.header__user_main{
+    color: white;
+}
+
+.header__out-symbol{
+    margin: auto 0;
+}
+/*create log_saved::after content symbol*/

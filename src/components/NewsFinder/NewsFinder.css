@@ -1,0 +1,58 @@
+.finder__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px calc((100% - 608px) / 2);
+    border-top: 1px solid grey;
+    opacity: 2;
+    max-width: 608px;
+}
+
+@media (max-width: 1000px) {
+    .finder__container {
+       max-width: 448px;
+       padding: 38px calc((100% - 448px) / 2) 48px;
+    }
+}
+@media (max-width: 590px) {
+    .finder__container{
+        margin: 0 18px;
+        max-width: calc(100% - 36px);
+    }
+}
+
+.finder__title{
+    font-size: 60px;
+    line-height: 64px;
+    font-weight: 500;
+    font-family: 'Roboto Slab', serif;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+}
+
+@media (max-width: 1000px) {
+    .finder__title {
+       font-size: 36px;
+       line-height: 40px;
+       font-weight: 400;
+    }
+}
+
+.finder__subtitle{
+    font-size: 18px;
+    line-height: 1.33;
+    font-family: 'Roboto Slab', sans-serif;
+    margin: 32px 0 88px;
+    font-weight: 400;
+    text-align: left;
+    width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .finder__subtitle {
+       font-size: 18px;
+       line-height: 24px;
+    }
+}
+
