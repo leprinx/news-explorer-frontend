@@ -4,6 +4,7 @@
     max-width: 1232px;
     padding: 32px calc((100% - 1232px) / 2) 26px;
     color: black;
+    margin-top: auto;
 }
 
 @media (max-width: 1300px) {

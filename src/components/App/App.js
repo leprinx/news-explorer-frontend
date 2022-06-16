@@ -11,6 +11,7 @@ import { useState, useCallback, useEffect } from 'react';
 import Popup from '../Popup/Popup';
 import PopupInput from '../PopupInput/PopupInput';
 import newsApi from '../../utils/NewsApi';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
   const [ isLogPopupOpen, setLogPopupOpen ] = useState(false);
@@ -108,7 +109,8 @@ function App() {
   }
 
   return (
-        <div className='App container'>
+    <Routes>
+      <Route exact path='/' element={<div className='App container'>
         <Main>
           <MainFunction 
           searchNews={searchNews} 
@@ -168,7 +170,33 @@ function App() {
           <PopupInput handleChange={setEmail} name='Sign-in Email' />
           <PopupInput handleChange={setPassword} name='Sign-in Password' />
         </Popup>
-      </div>
+      </div>} />
+      <Route path='/saved-news' element={
+        <div className='App container'>
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+          <Main>
+          <MainFunction 
+            searchNews={searchNews} 
+            isLoggedIn={isLoggedIn}  
+            openLogPopup={handleLogPopupOpen} 
+            location={location.pathname}
+            loggOut={handleLoggOut}
+            username={username}/>
+            {isNewsOpen &&  
+            <News 
+            searchResult={newsResults} 
+            newsIndex={newsIndex} 
+            showMore={displayedNews}
+            location={location}
+            isLoggedIn={isLoggedIn}/>
+            }
+        </Main>
+        <Footer />
+        </ProtectedRoute>
+        </div>
+      }/>
+      <Route path='*' element={<Navigate to='/' />} />
+    </Routes>
   );
 } 
 
