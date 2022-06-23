@@ -11,6 +11,7 @@
 }
 
 .finder-form__input{
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 22px;
     font-weight: 400;
@@ -27,10 +28,12 @@
        font-size: 16x;
        line-height: 22px;
        font-weight: 400;
+       padding: 17px 16px;
     }
 }
 
 .finder-form__button{
+    font-family: 'Roboto', sans-serif;
     font-size: 18px;
     line-height: 24px;
     font-weight: 400;
@@ -62,7 +65,8 @@
 @media (max-width: 719px) {
     .finder-form__button {
        width: 100%;
-       margin-top: 32px;
+       margin-top: 16px;
        position: relative;
+       padding: 16px 0;
     }
 }

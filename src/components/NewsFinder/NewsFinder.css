@@ -16,16 +16,17 @@
 }
 @media (max-width: 590px) {
     .finder__container{
-        margin: 0 18px;
-        max-width: calc(100% - 36px);
+        margin: 0 16px;
+        max-width: calc(100% - 32px);
+        padding: 30px 0 32px;
     }
 }
 
 .finder__title{
+    font-family: 'Roboto Slab', serif;
     font-size: 60px;
     line-height: 64px;
     font-weight: 500;
-    font-family: 'Roboto Slab', serif;
     width: 100%;
     text-align: left;
     margin: 0;
@@ -42,7 +43,7 @@
 .finder__subtitle{
     font-size: 18px;
     line-height: 1.33;
-    font-family: 'Roboto Slab', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 32px 0 88px;
     font-weight: 400;
     text-align: left;
@@ -56,3 +57,8 @@
     }
 }
 
+@media (max-width: 716px) {
+    .finder__subtitle {
+       margin: 16px 0 122px;
+    }
+}
