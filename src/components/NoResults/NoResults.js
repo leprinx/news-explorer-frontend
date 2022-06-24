@@ -5,7 +5,7 @@ function NoResults(){
     return(
         <section className='no-results'>
             <div className='no-results__container'>
-            <img src={notFound} className='no-results__image'></img>
+            <img src={notFound} className='no-results__image' alt='Nothing found'></img>
             <h4 className='no-results__title'>
                 Nothing Found
             </h4>

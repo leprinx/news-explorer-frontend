@@ -5,7 +5,7 @@ import './Footer.css';
 
 function Footer() {
   return (
-    <div className='footer'>
+    <footer className='footer'>
       <p className='footer__rights'>
         &copy; 2022 Supersite, powered by News API
       </p>
@@ -29,7 +29,7 @@ function Footer() {
           </a>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 

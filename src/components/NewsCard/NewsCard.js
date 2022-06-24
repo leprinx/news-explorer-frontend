@@ -23,11 +23,11 @@ function NewsCard({ newInfo, location, isLoggedIn }) {
         }
     }
   return (
-    <li className='news__element'>
+    <li className='news__element' key={newInfo.source.id + Math.floor(Math.random() * 1000)}>
       <a className='news__link' href={newInfo.url} target="_blank" rel="noreferrer">
         <img
           src={newInfo.urlToImage}
-          alt='article picture'
+          alt='article'
           className='news__picture'
         ></img>
         <div className='news__description'>
@@ -38,9 +38,9 @@ function NewsCard({ newInfo, location, isLoggedIn }) {
         </div>
       </a>
       {location.pathname === "/saved-news" ? (
-           <div className='news__delete'></div>
+           <button className='news__delete'></button>
         ) : (
-            <div className={isLoggedIn ? 'news__save' : ''}onClick={handleSave} style={{backgroundImage: `url(${saveImage})`}}></div>
+            <button className='news__save' onClick={handleSave} style={{backgroundImage: `url(${saveImage})`}}></button>
         )}
           {location.pathname === "/saved-news" ? (
            <p className='news__save-text'>Remove from Saved</p>

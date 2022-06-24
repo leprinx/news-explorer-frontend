@@ -7,25 +7,28 @@ import Footer from '../Footer/Footer';
 import News from '../News/News';
 import NoResults from '../NoResults/NoResults';
 import Loader from '../Loader/Loader';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Popup from '../Popup/Popup';
 import PopupInput from '../PopupInput/PopupInput';
 import newsApi from '../../utils/NewsApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import SuccesPopup from '../SuccesPopup/SuccesPopup';
 
 function App() {
   const [ isLogPopupOpen, setLogPopupOpen ] = useState(false);
   const [ isRegisterPopupOpen, setRegisterPopupOpen ] = useState(false);
+  const [ isSuccesPopupOpen, setIsSuccesPopupOpen ] = useState(false);
   const [ newsResults, setNewsResults ] = useState([]);
   const [ newsIndex, setNewsIndex ] = useState(3);
   const [ isNewsOpen, setIsNewsOpen] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false);
   const [ articlesFound, setIsArticlesFound ] = useState(true);
-  const [ password, setPassword ] = useState(null);
-  const [ email, setEmail ] = useState(null);
-  const [ username, setUsername ] = useState(null);
+  const [ password, setPassword ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ isEmail, setIsEmail ] = useState(false);
+  const [ username, setUsername ] = useState('');
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-
+  const [ isValid, setIsValid ] = useState(false);
 
   let location = useLocation();
   const currentDate = new Date().toLocaleDateString();
@@ -40,7 +43,6 @@ function App() {
     closeAllPopups();
     setIsLoggedIn(true);
   }
-
   const handleLoggOut = () => {
     localStorage.removeItem('password');
     localStorage.removeItem('email');
@@ -82,17 +84,20 @@ function App() {
     setNewsIndex( newsIndex + 3 );
   }
 
-  const handleEscClose = useCallback((evt) => {
+  const handleEscClose = (evt) => {
     if (evt.key === 'Escape') {
-      // eslint-disable-next-line no-use-before-define
       closeAllPopups();
     }
-  }, []);
+  }
   const handleLogPopupOpen = () =>{
+    setEmail('');
+    setPassword('');
     setLogPopupOpen(true);
     document.addEventListener('keyup', handleEscClose);
   }
   const handleRegisterPopupOpen = () =>{
+    setEmail('');
+    setPassword('');
     setRegisterPopupOpen(true);
     document.addEventListener('keyup', handleEscClose);
   }
@@ -100,14 +105,41 @@ function App() {
   const closeAllPopups = () =>{
     setLogPopupOpen(false);
     setRegisterPopupOpen(false);
+    setIsSuccesPopupOpen(false);
     document.removeEventListener('keyup', handleEscClose);
   }
 
   const changePopup = () =>{
+    setEmail('');
+    setPassword('');
+    setUsername('');
     setLogPopupOpen(!isLogPopupOpen);
     setRegisterPopupOpen(!isRegisterPopupOpen);
   }
 
+  const succesToLogin = () =>{
+    setEmail('');
+    setPassword('');
+    setIsSuccesPopupOpen(false);
+    setLogPopupOpen(true);
+  }
+  
+  const handleValidityLoggin = () =>{
+    if(password !== '' && isEmail !== false){
+      setIsValid(true);
+    } else{
+      setIsValid(false);
+    }
+  }
+
+  /*Waiting for backend validation*/
+  const handleValidityRegister = () =>{
+    if(password !== '' && isEmail === true && username !== ''){
+      setIsValid(true);
+    } else{
+      setIsValid(false);
+    }
+}
   return (
     <Routes>
       <Route exact path='/' element={<div className='App container'>
@@ -150,12 +182,14 @@ function App() {
           email={email}
           password={password}
           username={username}
+          isValid={isValid}
           onSubmit={()=>{
             closeAllPopups();
-            console.log(email, password, username)}}>
-          <PopupInput handleChange={setEmail} name='Sign-up Email' />
-          <PopupInput handleChange={setPassword} name='Sign-up Password' />
-          <PopupInput handleChange={setUsername} name='Sign-up Username' />
+            setIsSuccesPopupOpen(true);
+            localStorage.setItem('usernmae', username)}}>
+          <PopupInput value={email} handleChange={setEmail} isEmail={setIsEmail} vanilaValidate={handleValidityRegister} name='Sign-up Email' />
+          <PopupInput value={password} handleChange={setPassword} vanilaValidate={handleValidityRegister} name='Sign-up Password' />
+          <PopupInput value={username} handleChange={setUsername} vanilaValidate={handleValidityRegister} name='Sign-up Username' />
         </Popup>
         <Popup name={'Sign in'} 
           isLogPopupOpen={isLogPopupOpen} 
@@ -166,10 +200,15 @@ function App() {
           changeName={'Sign up'}
           email={email}
           password={password}
+          isValid={isValid}
           onSubmit={handleLoggIn}>
-          <PopupInput handleChange={setEmail} name='Sign-in Email' />
-          <PopupInput handleChange={setPassword} name='Sign-in Password' />
+          <PopupInput value={email} handleChange={setEmail} isEmail={setIsEmail} vanilaValidate={handleValidityLoggin} name='Sign-in Email' />
+          <PopupInput value={password} handleChange={setPassword} vanilaValidate={handleValidityLoggin} name='Sign-in Password' />
         </Popup>
+        <SuccesPopup 
+          isOpen={isSuccesPopupOpen}
+          closePopups={closeAllPopups}
+          changePopup={succesToLogin}/>
       </div>} />
       <Route path='/saved-news' element={
         <div className='App container'>
@@ -181,7 +220,8 @@ function App() {
             openLogPopup={handleLogPopupOpen} 
             location={location.pathname}
             loggOut={handleLoggOut}
-            username={username}/>
+            username={username}
+            isValid={isValid}/>
             {isNewsOpen &&  
             <News 
             searchResult={newsResults} 
