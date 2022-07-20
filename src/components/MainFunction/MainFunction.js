@@ -7,7 +7,7 @@ import SavedNewsInfo from '../SavedNewsInfo/SavedNewsInfo';
 function MainFunction({ isLoggedIn,  openLogPopup, location, searchNews, loggOut, username}){
     return (
       <section className= {`main-function ${location === '/saved-news' ? 'main-function_saved-news' : ''}`}>
-        <Header isLoggedIn={isLoggedIn}  openLogPopup={openLogPopup} location={location}loggOut={loggOut} username={username}/>
+        <Header isLoggedIn={isLoggedIn}  openLogPopup={openLogPopup} location={location}loggOut={loggOut}/>
         {
           location === '/saved-news'?
           <SavedNewsInfo />
