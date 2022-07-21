@@ -12,7 +12,7 @@ function News(props) {
         { /*Add condition to iterate over saved arrays for saved-news route */
            newsArray.map((news, index) => {
             if(index <= (maxIndex - 1)){
-              return <NewsCard isLoggedIn={props.isLoggedIn} newInfo={news} location={props.location}/>;
+              return <NewsCard keyword={props.keyword} savedNews={props.savedNews} token={props.token} addNews={props.addNews} isLoggedIn={props.isLoggedIn} newInfo={news} location={props.location}/>;
             } return '';
           })
         }
