@@ -79,7 +79,7 @@ function App() {
     setCurrentUser(undefined);
     setIsLoggedIn(false);
     setIsNewsOpen(false);
-    setNewsResults([]);
+    setSavedNews([]);
   };
   const getSavedNews = () => {
     mainApi
@@ -119,6 +119,9 @@ function App() {
   }
   useEffect(() => {
     getSavedNews();
+    if(location.pathname === '/saved-news' && !isLoggedIn){
+      handleLogPopupOpen();
+    }
     if (jwt != null) {
       auth
         .checkToken(jwt)
@@ -174,7 +177,6 @@ function App() {
     setPassword('');
     setLogPopupOpen(true);
     setLogginError(undefined);
-    document.addEventListener('keyup', handleEscClose);
   };
   const handleRegisterPopupOpen = () => {
     setEmail('');
@@ -182,13 +184,11 @@ function App() {
     setUsername('');
     setSignUpError(undefined);
     setRegisterPopupOpen(true);
-    document.addEventListener('keyup', handleEscClose);
   };
 
   const closeAllPopups = () => {
     setLogPopupOpen(false);
     setRegisterPopupOpen(false);
-    document.removeEventListener('keyup', handleEscClose);
   };
 
   const changePopup = () => {
@@ -241,6 +241,8 @@ function App() {
                         savedNews={savedNews}
                         token={jwt}
                         keyword={topic}
+                        deleteNews={removeNews}
+                        openLoggin={handleLogPopupOpen}
                       />
                     )}
                   </>
@@ -299,6 +301,7 @@ function App() {
                     location={location.pathname}
                     loggOut={handleLoggOut}
                     username={username}
+                    savedNews={savedNews}
                   />
                   {savedNews.length > 0 && (
                     <SavedNews

@@ -1,8 +1,7 @@
 import './NewsCard.css';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import saveBlue from '../../images/news__save/save-blue.svg';
 import saveWhite from '../../images/news__save/save-white.svg';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function NewsCard({
   newInfo,
@@ -12,12 +11,15 @@ function NewsCard({
   token,
   savedNews,
   removeNews,
-  keyword
+  keyword,
+  openLoggin,
 }) {
   const [saveImage, setSaveImage] = useState(saveWhite);
   let dateString = '';
   let descriptionString = '';
+  let isSaved = false;
   if (location.pathname === '/') {
+    isSaved = savedNews.some((news) => news.link === newInfo.url);
     descriptionString = newInfo.description;
     dateString = newInfo.publishedAt;
     dateString = dateString.slice(0, 10);
@@ -34,41 +36,48 @@ function NewsCard({
     /((<ul>|<ol>)|<li>|<\/li>|(<\/ul>|<\/ol>))/g,
     ''
   );
-  let user = useContext(CurrentUserContext);
   useEffect(() => {
     if (location.pathname === '/') {
-      const isSaved = savedNews.some((news) => news.link === newInfo.url);
       if (isSaved) {
         setSaveImage(saveBlue);
       } else {
         setSaveImage(saveWhite);
       }
     } 
-  }, [,savedNews]);
+  }, [savedNews]);
   const handleSave = () => {
     if (saveImage === saveWhite) {
-      addNews(
-        keyword,
-        newInfo.title,
-        description,
-        dateString,
-        newInfo.source.name,
-        newInfo.url,
-        newInfo.urlToImage,
-        token
-      );
-    }
+      if(!isLoggedIn){
+        openLoggin();
+      } else{
+        addNews(
+          keyword,
+          newInfo.title,
+          description,
+          dateString,
+          newInfo.source.name,
+          newInfo.url,
+          newInfo.urlToImage,
+          token
+        );
+      }
+    } 
   };
   const handleDelete = () =>{
-    removeNews(newInfo._id);
+    if (location.pathname === '/'){
+      const savedCard = savedNews.filter((item) => item.link === newInfo.url)
+      removeNews(savedCard[0]._id);
+    } else{
+      removeNews(newInfo._id);
+    }
   }
   return (
     <li
       className='news__element'
       key={
         location.pathname === '/saved-news'
-          ? newInfo.source.id + Math.floor(Math.random() * 1000)
-          : newInfo._id
+          ? newInfo._id 
+          : newInfo.url
       }
     >
       <a
@@ -104,7 +113,7 @@ function NewsCard({
       ) : (
         <button
           className='news__save'
-          onClick={handleSave}
+          onClick={isSaved? handleDelete : handleSave}
           style={{ backgroundImage: `url(${saveImage})` }}
         ></button>
       )}

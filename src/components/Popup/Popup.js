@@ -1,7 +1,24 @@
 import './Popup.css';
 import button from '../../images/button_type_close/close.svg';
+import { useEffect } from "react";
 
 function Popup(props) {
+  useEffect(() => {
+    if (!props.isLogPopupOpen) return;
+    const closeByEscape = (e) => {
+      if (e.key === 'Escape') {
+        props.closePopups();
+      }
+    }
+    document.addEventListener('keydown', closeByEscape)
+    return () => document.removeEventListener('keydown', closeByEscape)
+}, [props.isLogPopupOpen, props.closePopups])
+
+  const handleOverlay = (e) => {
+    if (e.target === e.currentTarget) {
+      props.closePopups();
+    }
+  }
   const onSubmit = (evt) => {
     props.onSubmit();
     props.resetForm();
@@ -11,6 +28,7 @@ function Popup(props) {
   return (
     <section className='popup-section'>
       <div
+        onClick={handleOverlay}
         className={`popup popup_type_sign-${name} ${
           props.isLogPopupOpen ? 'popup_open' : ''
         }`}
