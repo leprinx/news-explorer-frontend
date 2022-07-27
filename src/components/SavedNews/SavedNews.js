@@ -2,7 +2,7 @@ import './SavedNews.css';
 import NewsCard from '../NewsCard/NewsCard';
 
 function SavedNews(props) {
-  let newsArray = props.searchResult;
+  const newsArray = props.searchResult;
   return (
     <section className='news'>
       <div className='news__container'>
@@ -19,6 +19,7 @@ function SavedNews(props) {
                   newInfo={news}
                   location={props.location}
                   removeNews={props.deleteNews}
+                  key={news._id}
                 />
               );
             })

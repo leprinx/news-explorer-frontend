@@ -4,13 +4,13 @@ import NewsFinder from '../NewsFinder/NewsFinder';
 import SavedNewsInfo from '../SavedNewsInfo/SavedNewsInfo';
 
 
-function MainFunction({ isLoggedIn,  openLogPopup, location, searchNews, loggOut, username}){
+function MainFunction({ isLoggedIn,  openLogPopup, location, searchNews, loggOut, savedNews}){
     return (
       <section className= {`main-function ${location === '/saved-news' ? 'main-function_saved-news' : ''}`}>
-        <Header isLoggedIn={isLoggedIn}  openLogPopup={openLogPopup} location={location}loggOut={loggOut}/>
+        <Header isLoggedIn={isLoggedIn}  openLogPopup={openLogPopup} location={location} loggOut={loggOut}/>
         {
           location === '/saved-news'?
-          <SavedNewsInfo />
+          <SavedNewsInfo savedNews={savedNews}/>
            : 
           <NewsFinder location={location} searchNews={searchNews}/> //h h2 and searchbar
         } 
